@@ -30,6 +30,7 @@ export const ROAD_ATLAS_FRAMES = {
   roadCurveSouthEast: 'landscapeTiles_123.png',
   roadCurveSouthWest: 'landscapeTiles_126.png',
   roadCurveNorthWest: 'landscapeTiles_127.png',
+  roadIntersection: 'landscapeTiles_090.png',
 };
 
 export const WATER_ATLAS_FRAMES = {

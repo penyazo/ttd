@@ -24,3 +24,24 @@ export function projectGridToIso(map, x, y) {
     y: (x + y) * (ISO_TILE_HEIGHT / 2) + ISO_ORIGIN_Y + ISO_TILE_HEIGHT / 2,
   };
 }
+
+export function getTileCenterPosition(map, x, y) {
+  const basePosition = projectGridToIso(map, x, y);
+
+  return {
+    x: basePosition.x,
+    y: basePosition.y - ISO_TILE_HEIGHT,
+  };
+}
+
+export function projectIsoToGrid(map, screenX, screenY) {
+  const localX = screenX - getIsoOriginX(map);
+  const localY = screenY - ISO_ORIGIN_Y + ISO_TILE_HEIGHT / 2;
+  const gridX = (localY / (ISO_TILE_HEIGHT / 2) + localX / (ISO_TILE_WIDTH / 2)) / 2;
+  const gridY = (localY / (ISO_TILE_HEIGHT / 2) - localX / (ISO_TILE_WIDTH / 2)) / 2;
+
+  return {
+    x: Math.floor(gridX + 0.5),
+    y: Math.floor(gridY + 0.5),
+  };
+}

@@ -6,7 +6,7 @@ export const VEHICLE_OFFSET_X = 0;
 export const VEHICLE_OFFSET_Y = -54;
 export const LOWER_CURVE_VEHICLE_OFFSET_Y = -2;
 
-export function getVehicleCurveOffset(map, vehicle) {
+export function getVehicleCurveOffset(map, roads, vehicle) {
   const pathLength = vehicle.path.length;
   const currentTile = vehicle.path[vehicle.pathIndex];
   const nextTile = vehicle.path[(vehicle.pathIndex + 1) % pathLength];
@@ -17,7 +17,7 @@ export function getVehicleCurveOffset(map, vehicle) {
 
   return {
     x: 0,
-    y: isLowerCurveTile(map, currentTile) || isLowerCurveTile(map, nextTile) ? LOWER_CURVE_VEHICLE_OFFSET_Y : 0,
+    y: isLowerCurveTile(roads, currentTile) || isLowerCurveTile(roads, nextTile) ? LOWER_CURVE_VEHICLE_OFFSET_Y : 0,
   };
 }
 
@@ -181,12 +181,12 @@ function isCurveBetween(previousTile, currentTile, nextTile) {
   return incomingDirection.x !== outgoingDirection.x || incomingDirection.y !== outgoingDirection.y;
 }
 
-function isLowerCurveTile(map, tile) {
+function isLowerCurveTile(roads, tile) {
   if (!tile) {
     return false;
   }
 
-  const roadAssetKey = getRoadAssetKey(map, tile.x, tile.y);
+  const roadAssetKey = getRoadAssetKey(roads, tile.x, tile.y);
 
   return roadAssetKey === 'roadCurveNorthEast' || roadAssetKey === 'roadCurveNorthWest';
 }
