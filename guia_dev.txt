@@ -1,0 +1,102 @@
+Resumen Del Proyecto
+Estamos construyendo un juego web estilo Transport Tycoon Deluxe simplificado, usando JavaScript + Phaser.
+
+La arquitectura está separada en dos capas:
+
+src/core: lógica pura del juego, sin Phaser.
+src/game: renderizado, input, UI y adaptación visual con Phaser.
+Phaser se usa solo para:
+
+dibujar el mapa
+gestionar ratón/input
+mostrar sprites, vehículos, edificios y menús
+La lógica importante debe seguir viviendo en core.
+
+Primer Objetivo
+El primer objetivo es tener un MVP jugable de construcción básica de carreteras en mapa isométrico.
+
+Ya tenemos:
+
+Mapa isométrico con tiles.
+Terreno: grass, water, sand, road.
+Vehículo que circula por una ruta.
+Movimiento visual del vehículo ajustado en curvas.
+Edificio simple sobre zona de arena.
+Selector de carreteras.
+Construcción por click y arrastre.
+Eliminación de carreteras.
+Carreteras elegidas manualmente, no calculadas automáticamente por vecinos.
+Estado Actual
+El jugador puede abrir un menú de carreteras y seleccionar:
+
+recta horizontal
+recta vertical
+4 curvas
+cruce de 4 vías
+borrar carretera
+Después puede pintar arrastrando sobre el mapa.
+
+Importante: ahora el juego no decide automáticamente qué carretera poner. La pieza la elige el jugador.
+
+Decisiones Técnicas Importantes
+El mapa principal está en src/core/map.js.
+Las variantes de carretera están en ROAD_TILE_TYPES.
+gameMap indica si un tile es carretera, agua, grass, etc.
+roadMap guarda qué pieza exacta de carretera hay en cada tile.
+La construcción vive en src/core/road-building.js.
+El render de carreteras está en src/game/road-view.js.
+El menú de carreteras está en src/game/ui/road-selector.js.
+El input del ratón está en src/game/input-controller.js.
+
+
+Próximos Pasos Recomendados
+Guardar/cargar estado del mapa
+Serializar gameMap y roadMap.
+Poder resetear o cargar un circuito.
+Validar rutas de vehículos
+Que el vehículo solo pueda circular por carreteras conectadas.
+Detectar si una carretera está mal conectada.
+Modo construcción más cómodo
+Atajos de teclado.
+Rotar pieza seleccionada con tecla.
+Mostrar preview antes de colocar.
+Separar herramientas
+Herramienta carretera.
+Herramienta borrar.
+Más adelante: estación, edificio, terreno.
+Vehículos dinámicos
+Que el vehículo calcule ruta sobre las carreteras construidas.
+Que no use una ruta hardcodeada.
+Estaciones
+Añadir una estación simple sobre arena o carretera.
+Que el vehículo tenga origen/destino.
+Economía básica
+Dinero inicial.
+Coste por construir carretera.
+Ingresos cuando el vehículo complete una ruta.
+Pulir UI
+Sustituir botones provisionales por imágenes.
+Añadir panel inferior o lateral.
+Mejorar iconos de construcción.
+
+Todo List Inicial
+Revisar que gameMap y roadMap estén siempre sincronizados.
+Añadir guardado/carga simple en JSON.
+Crear una función core para validar conexiones de carretera.
+Implementar pathfinding sobre carreteras construidas.
+Sustituir la ruta hardcodeada del camión por una ruta calculada.
+Añadir preview de tile antes de construir.
+Añadir rotación de carretera seleccionada.
+Crear primera estación simple.
+Añadir coste de construcción.
+Documentar controles básicos en un README.md.
+Regla General Para Seguir
+Cada nueva mecánica debe preguntarse:
+
+“¿Esto es lógica de juego o solo presentación?”
+
+Si es lógica: src/core.
+
+Si es visual/input/UI: src/game.
+
+Así evitamos que Phaser se mezcle con la simulación y podremos hacer crecer el proyecto sin rehacerlo todo.
